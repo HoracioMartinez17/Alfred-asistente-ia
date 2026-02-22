@@ -5,15 +5,34 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "scheme": "alfred",
+    "extra": {
+      "elevenlabs": {
+        "agent_id": "YOUR_AGENT_ID_HERE",
+        "override_config": {
+          "agent": {
+            "prompt": {
+              "top_p": 0.9,
+              "temperature": 0.7,
+              "max_tokens": 256
+            }
+          }
+        }
+      }
+    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app needs access to microphone for voice conversations."
+      },
+      "bundleIdentifier": "com.alfred.asistenteia"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +40,9 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["RECORD_AUDIO"],
+      "package": "com.alfred.asistenteia"
     },
     "web": {
       "favicon": "./assets/favicon.png"
