@@ -23,10 +23,10 @@ Aplicación enfocada en:
 - Navegación por tabs con Expo Router.
 - Fallback específico para web para evitar dependencias nativas no soportadas.
 
-### Capturas (App / Web)
+### Capturas (App)
 
 ![App - Pantalla principal](assets/desconectado.png)
-![App - Estado conectado](assets/desconectado.png)
+![App - Estado conectado](assets//alfred-activo.pngg)
 
 ### Stack técnico
 
