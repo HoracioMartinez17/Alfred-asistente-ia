@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, Pressable, ScrollView, Animated } from "react-native";
+import { View, Text, Pressable, ScrollView, Animated, Easing } from "react-native";
 import { useElevenLabsConversation } from "../hooks/useElevenLabsConversation";
 import { styles } from "../styles/agent.styles";
 
@@ -18,6 +18,11 @@ export const AgentScreen = () => {
 
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const scrollViewRef = useRef<ScrollView>(null);
+  const rotation1 = useRef(new Animated.Value(0)).current;
+  const rotation2 = useRef(new Animated.Value(0)).current;
+  const rotation3 = useRef(new Animated.Value(0)).current;
+  const glowAnim = useRef(new Animated.Value(0)).current;
+  const borderGlow = useRef(new Animated.Value(0)).current;
 
   // Pulse animation cuando el agente está hablando
   useEffect(() => {
@@ -40,6 +45,66 @@ export const AgentScreen = () => {
       pulseAnim.setValue(1);
     }
   }, [isAgentThinking, pulseAnim]);
+
+  // Animaciones del loader cuando está escuchando
+  useEffect(() => {
+    if (isConnected && !isMicMuted) {
+      Animated.loop(
+        Animated.timing(rotation1, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ).start();
+
+      Animated.loop(
+        Animated.timing(rotation2, {
+          toValue: 1,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ).start();
+
+      Animated.loop(
+        Animated.timing(rotation3, {
+          toValue: 1,
+          duration: 1500,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ).start();
+    } else {
+      rotation1.setValue(0);
+      rotation2.setValue(0);
+      rotation3.setValue(0);
+    }
+  }, [isConnected, isMicMuted]);
+
+  // Animación de borde brillante cuando está desconectado
+  useEffect(() => {
+    if (!isConnected) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(borderGlow, {
+            toValue: 1,
+            duration: 2000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: false,
+          }),
+          Animated.timing(borderGlow, {
+            toValue: 0,
+            duration: 2000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: false,
+          }),
+        ]),
+      ).start();
+    } else {
+      borderGlow.setValue(0);
+    }
+  }, [isConnected]);
 
   const handleMicPress = async () => {
     try {
@@ -109,6 +174,31 @@ export const AgentScreen = () => {
 
   const statusInfo = getStatusInfo();
 
+  const spin1 = rotation1.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  const spin2 = rotation2.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["360deg", "0deg"],
+  });
+
+  const spin3 = rotation3.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  const borderGlowOpacity = borderGlow.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.3, 1],
+  });
+
+  const borderGlowWidth = borderGlow.interpolate({
+    inputRange: [0, 1],
+    outputRange: [2, 4],
+  });
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -130,22 +220,103 @@ export const AgentScreen = () => {
 
       {/* Microphone Button */}
       <View style={styles.micContainer}>
-        <Animated.View
-          style={{
-            transform: [{ scale: pulseAnim }],
-          }}
-        >
-          <Pressable
-            style={[
-              styles.micButton,
-              isConnected && !isMicMuted && styles.micButtonActive,
-            ]}
-            onPress={handleMicPress}
-            disabled={status === "connecting"}
-          >
-            <Text style={styles.micText}>🎤</Text>
-          </Pressable>
-        </Animated.View>
+        {isConnected && !isMicMuted ? (
+          <View style={styles.loaderContainer}>
+            {/* Anillo exterior */}
+            <Animated.View
+              style={[
+                styles.loaderRing,
+                styles.ring1,
+                { transform: [{ rotate: spin1 }] },
+              ]}
+            />
+            {/* Anillo medio */}
+            <Animated.View
+              style={[
+                styles.loaderRing,
+                styles.ring2,
+                { transform: [{ rotate: spin2 }] },
+              ]}
+            />
+            {/* Anillo interior */}
+            <Animated.View
+              style={[
+                styles.loaderRing,
+                styles.ring3,
+                { transform: [{ rotate: spin3 }] },
+              ]}
+            />
+            {/* Botón central */}
+            <Pressable
+              style={styles.centerButton}
+              onPress={handleMicPress}
+              disabled={status === "connecting"}
+            >
+              <Text style={styles.micText}>🎤</Text>
+            </Pressable>
+          </View>
+        ) : (
+          <View style={styles.glowButtonContainer}>
+            {/* Borde superior */}
+            <Animated.View
+              style={[
+                styles.glowBorderHorizontal,
+                styles.glowBorderTop,
+                {
+                  opacity: borderGlowOpacity,
+                  height: borderGlowWidth,
+                },
+              ]}
+            />
+            {/* Borde inferior */}
+            <Animated.View
+              style={[
+                styles.glowBorderHorizontal,
+                styles.glowBorderBottom,
+                {
+                  opacity: borderGlowOpacity,
+                  height: borderGlowWidth,
+                },
+              ]}
+            />
+            {/* Borde izquierdo */}
+            <Animated.View
+              style={[
+                styles.glowBorderVertical,
+                styles.glowBorderLeft,
+                {
+                  opacity: borderGlowOpacity,
+                  width: borderGlowWidth,
+                },
+              ]}
+            />
+            {/* Borde derecho */}
+            <Animated.View
+              style={[
+                styles.glowBorderVertical,
+                styles.glowBorderRight,
+                {
+                  opacity: borderGlowOpacity,
+                  width: borderGlowWidth,
+                },
+              ]}
+            />
+            {/* Botón principal */}
+            <Animated.View
+              style={{
+                transform: [{ scale: pulseAnim }],
+              }}
+            >
+              <Pressable
+                style={styles.micButtonGlow}
+                onPress={handleMicPress}
+                disabled={status === "connecting"}
+              >
+                <Text style={styles.neonButtonText}>HABLAR</Text>
+              </Pressable>
+            </Animated.View>
+          </View>
+        )}
 
         {isConnected && (
           <Pressable style={styles.cancelButton} onPress={handleCancelRecording}>

@@ -120,6 +120,130 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
+  // Loader animado
+  loaderContainer: {
+    width: 160,
+    height: 160,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    marginVertical: SPACING.lg,
+  },
+
+  loaderRing: {
+    position: "absolute",
+    borderRadius: 999,
+    borderWidth: 4,
+  },
+
+  ring1: {
+    width: 160,
+    height: 160,
+    borderColor: "#00ffff",
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+  },
+
+  ring2: {
+    width: 120,
+    height: 120,
+    borderColor: "#00ffff",
+    borderTopColor: "transparent",
+    borderLeftColor: "transparent",
+  },
+
+  ring3: {
+    width: 80,
+    height: 80,
+    borderColor: "#00ffff80",
+    borderBottomColor: "transparent",
+    borderRightColor: "transparent",
+  },
+
+  centerButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: "rgba(0, 20, 40, 0.85)",
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: "#00ffff",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    shadowColor: "#00ffff",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+
+  // Botón con efecto glow (desconectado)
+  glowButtonContainer: {
+    position: "relative",
+    width: 120,
+    height: 120,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  glowBorderHorizontal: {
+    position: "absolute",
+    width: "100%",
+    backgroundColor: "#00ffff",
+  },
+
+  glowBorderVertical: {
+    position: "absolute",
+    height: "100%",
+    backgroundColor: "#00ffff",
+  },
+
+  glowBorderTop: {
+    top: 0,
+    left: 0,
+  },
+
+  glowBorderBottom: {
+    bottom: 0,
+    left: 0,
+  },
+
+  glowBorderLeft: {
+    top: 0,
+    left: 0,
+  },
+
+  glowBorderRight: {
+    top: 0,
+    right: 0,
+  },
+
+  micButtonGlow: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "rgba(0, 20, 40, 0.85)",
+    borderWidth: 2,
+    borderColor: "#00ffff",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#00ffff",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.9,
+    shadowRadius: 20,
+    elevation: 15,
+  },
+
+  neonButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#00ffff",
+    letterSpacing: 2,
+    textShadowColor: "#00ffff",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+  },
+
   // Instrucciones
   instructionContainer: {
     width: "100%",

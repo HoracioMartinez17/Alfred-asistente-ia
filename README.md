@@ -25,9 +25,8 @@ Aplicación enfocada en:
 
 ### Capturas (App / Web)
 
-![App - Pantalla principal](assets/screenshots/app-home.png)
-![App - Estado conectado](assets/screenshots/app-connected.png)
-![Web - Vista principal](assets/screenshots/web-home.png)
+![App - Pantalla principal](assets/desconectado.png)
+![App - Estado conectado](assets/adaptive-icon.png)
 
 ### Stack técnico
 
