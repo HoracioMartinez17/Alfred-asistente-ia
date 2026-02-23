@@ -26,7 +26,7 @@ Aplicación enfocada en:
 ### Capturas (App)
 
 ![App - Pantalla principal](assets/desconectado.png)
-![App - Estado conectado](assets//alfred-activo.pngg)
+![App - Estado conectado](assets/alfred-activo.png)
 
 ### Stack técnico
 
